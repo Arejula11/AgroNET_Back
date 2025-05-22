@@ -1,0 +1,390 @@
+{
+  "info": {
+    "_postman_id": "acbabac4-6f99-4e43-aeab-51427073f60c",
+    "name": "AgroNET",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43258282"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Create user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"test2\",\n  \"email\": \"test@test.test\",\n  \"password\": \"UnaBuenaClave\",\n  \"role\": \"Agricultor pequeño\",\n  \"autonomousCommunity\": \"Aragón\",\n  \"isAdmin\": false,\n  \"phoneNumber\": \"+34612345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/users",
+              "host": ["{{url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/users",
+              "host": ["{{url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Edit user",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/users",
+              "host": ["{{url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"usernameOrEmail\": \"test@test.test\",\n    \"password\": \"UnaBuenaClave\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/users/login",
+              "host": ["{{url}}"],
+              "path": ["users", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload profile picture",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/users/profile-picture",
+              "host": ["{{url}}"],
+              "path": ["users", "profile-picture"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete profile picture",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/users/profile-picture",
+              "host": ["{{url}}"],
+              "path": ["users", "profile-picture"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "Get all products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/products?page=1&size=10",
+              "host": ["{{url}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get product by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/products/{{productId}}",
+              "host": ["{{url}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh product images",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productIds\": [\"{{productId}}\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/products/refresh-images",
+              "host": ["{{url}}"],
+              "path": ["products", "refresh-images"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Parcel",
+      "item": [
+        {
+          "name": "Create parcel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"{{userId}}\",\n  \"size\": \"Mediana\",\n  \"crop\": \"Cereales\",\n  \"location\": {\n    \"lat\": 40.451413888888894,\n    \"lng\": -2.5663527777777775\n  },\n  \"autonomousCommunity\": \"Castilla-La Mancha\",\n  \"geoJSON\": {\n    \"type\": \"Feature\",\n    \"geometry\": {\n      \"type\": \"Polygon\",\n      \"coordinates\": [\n        [\n          [-2.5663527777777775, 40.451413888888894],\n          [-2.5653527777777775, 40.451413888888894],\n          [-2.5653527777777775, 40.450413888888894],\n          [-2.5663527777777775, 40.450413888888894],\n          [-2.5663527777777775, 40.451413888888894]\n        ]\n      ]\n    },\n    \"properties\": {\n      \"provincia\": \"02 - ALBACETE\",\n      \"municipio\": \"179 - VALDEGANGA\",\n      \"poligono\": 511,\n      \"parcela\": 1005,\n      \"area\": 50000,\n      \"perimetro\": 400\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/parcels",
+              "host": ["{{url}}"],
+              "path": ["parcels"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get parcel by coordinates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/parcels?lng=-2.5663527777777775&lat=40.451413888888894",
+              "host": ["{{url}}"],
+              "path": ["parcels"],
+              "query": [
+                {
+                  "key": "lng",
+                  "value": "-2.5663527777777775"
+                },
+                {
+                  "key": "lat",
+                  "value": "40.451413888888894"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notification",
+      "item": [
+        {
+          "name": "Process Weather Alerts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alerts\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"alertType\": \"Temporal\",\n        \"severity\": \"Alta\",\n        \"title\": \"Alerta por fuertes lluvias\",\n        \"description\": \"Se esperan precipitaciones intensas en las próximas 24 horas\",\n        \"startTime\": \"2025-05-20T14:00:00Z\",\n        \"endTime\": \"2025-05-21T14:00:00Z\"\n      },\n      \"geometry\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n          [\n            [-2.57, 40.46],\n            [-2.56, 40.46],\n            [-2.56, 40.45],\n            [-2.57, 40.45],\n            [-2.57, 40.46]\n          ]\n        ]\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/notifications/weather-alerts",
+              "host": ["{{url}}"],
+              "path": ["notifications", "weather-alerts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"Alerta de prueba\",\n    \"message\": \"Esta es una notificación de prueba para verificar el sistema\",\n    \"alertType\": \"Prueba\",\n    \"severity\": \"Baja\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/notifications/test/{{userId}}",
+              "host": ["{{url}}"],
+              "path": ["notifications", "test", "{{userId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "http://localhost/api",
+      "type": "string"
+    }
+  ]
+}
